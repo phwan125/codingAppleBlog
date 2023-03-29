@@ -1,6 +1,7 @@
 import './App.css';
 import styled from 'styled-components';
 import { useState } from 'react';
+import Modal from '../components/Modal';
 
 
 const Menu = styled.div`
@@ -28,13 +29,31 @@ function App() {
       <Menu>
         <h4>Menu</h4>
       </Menu>
+      <button onClick={() => {
+        let copyList = [...title]
+        copyList[0] = "여자코트추천"
+        setTitle(copyList)
+      }}>
+        ⭐️
+      </button>
+      <button onClick={() => {
+        let copyListSort = [...title]
+
+        setTitle(copyListSort.sort())
+      }}>
+        👉
+      </button>
       <BlogPost>
         <h4>{title[0]}
           <span onClick={() => {
             setNumlike(prev => prev + 1)
           }}>
             👍
-          </span> {numlike}</h4>
+          </span> {numlike}
+
+
+        </h4>
+
         <p>{date[0]}</p>
       </BlogPost>
       <BlogPost>
@@ -45,6 +64,9 @@ function App() {
         <h4>{title[2]}</h4>
         <p>{date[0]}</p>
       </BlogPost>
+      <Modal />
+
+
     </div>
   );
 }
