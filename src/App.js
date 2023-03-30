@@ -22,18 +22,22 @@ align-items:flex-start ;
 
 function App() {
   const [title, setTitle] = useState(["남자 코트 추천", "강남 우동맛집", "파이썬독학"])
-  const [numlike, setNumlike] = useState(0)
+  const [numlike, setNumlike] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
   const [date, setDate] = useState(["2023-03-29"])
+  const [open, setOpen] = useState(false)
+  const [page, setPage] = useState(0)
+  const changeTitle = () => {
+    let copyList = [...title]
+    copyList[0] = "여자코트추천"
+    setTitle(copyList)
+  }
+
   return (
     <div className="App">
       <Menu>
         <h4>Menu</h4>
       </Menu>
-      <button onClick={() => {
-        let copyList = [...title]
-        copyList[0] = "여자코트추천"
-        setTitle(copyList)
-      }}>
+      <button onClick={changeTitle}>
         ⭐️
       </button>
       <button onClick={() => {
@@ -43,31 +47,35 @@ function App() {
       }}>
         👉
       </button>
-      <BlogPost>
-        <h4>{title[0]}
+      {title.map((titleText, i) => {
+        return (<BlogPost key={i}>
+
+          <h4 onClick={() => {
+            if (!open) {
+              setOpen(true)
+            }
+            setPage(i)
+          }}
+          >{i + 1}.{titleText}
+
+          </h4>
           <span onClick={() => {
-            setNumlike(prev => prev + 1)
+            let copyLike = [...numlike]
+            copyLike[i] += 1
+            setNumlike(copyLike)
           }}>
-            👍
-          </span> {numlike}
+            👍   {numlike[i]}
+          </span>
+          <p>{date[0]}</p>
+
+        </BlogPost>)
+      })}
+
+      {open ? <Modal color={"orange"} title={title} changeTitle={changeTitle} page={page} /> : null}
 
 
-        </h4>
 
-        <p>{date[0]}</p>
-      </BlogPost>
-      <BlogPost>
-        <h4>{title[1]}</h4>
-        <p>{date[0]}</p>
-      </BlogPost>
-      <BlogPost>
-        <h4>{title[2]}</h4>
-        <p>{date[0]}</p>
-      </BlogPost>
-      <Modal />
-
-
-    </div>
+    </div >
   );
 }
 
