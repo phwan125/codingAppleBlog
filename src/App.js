@@ -24,6 +24,8 @@ function App() {
   const [title, setTitle] = useState(["남자 코트 추천", "강남 우동맛집", "파이썬독학"])
   const [numlike, setNumlike] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
   const [date, setDate] = useState(["2023-03-29"])
+  const [textInput, setTextInput] = useState("")
+
   const [open, setOpen] = useState(false)
   const [page, setPage] = useState(0)
   const changeTitle = () => {
@@ -66,11 +68,29 @@ function App() {
           }}>
             👍   {numlike[i]}
           </span>
+          <button onClick={() => {
+            let copyList = [...title]
+            copyList.splice(i, 1);
+            setTitle(copyList)
+          }} >삭제~~ {textInput}</button>
           <p>{date[0]}</p>
 
         </BlogPost>)
       })}
+      <input onChange={(e) => {
+        setTextInput(e.target.value);
+        console.log(textInput)
+      }} />
+      <button onClick={() => {
+        if (textInput == "") {
 
+        } else {
+          let copyList = [...title];
+          copyList.unshift(textInput)
+          setTitle(copyList)
+        }
+
+      }}>입력</button>
       {open ? <Modal color={"orange"} title={title} changeTitle={changeTitle} page={page} /> : null}
 
 
